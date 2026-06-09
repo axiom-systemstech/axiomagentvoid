@@ -7,17 +7,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AXIOM AGENT-VOID | Escudo de Veracidad</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        :root[data-theme="dark"] {
+            --bg-color: #03060a;
+            --surface-color: rgba(9,13,20,0.97);
+            --text-main: #F5F6F8;
+            --text-muted: #8E92A2;
+            --accent-glow-1: #00e5ff;
+            --accent-glow-2: #9b51e0;
+            --border-color: rgba(255,255,255,0.07);
+            --code-bg: #06090E;
+            --safe-bg: rgba(0,255,102,0.1);
+            --safe-border: #00ff66;
+            --danger-bg: rgba(255,68,68,0.1);
+            --danger-border: #ff4444;
+            --warning-bg: rgba(255,170,0,0.1);
+            --warning-border: #ffaa00;
+        }
+        :root[data-theme="light"] {
+            --bg-color: #F2F4F8;
+            --surface-color: rgba(255,255,255,0.96);
+            --text-main: #101219;
+            --text-muted: #5F6473;
+            --accent-glow-1: #00b8cc;
+            --accent-glow-2: #823bc2;
+            --border-color: rgba(0,0,0,0.09);
+            --code-bg: #EAEFF5;
+            --safe-bg: rgba(0,200,80,0.1);
+            --safe-border: #00aa44;
+            --danger-bg: rgba(200,0,0,0.1);
+            --danger-border: #cc0000;
+            --warning-bg: rgba(200,130,0,0.1);
+            --warning-border: #cc8200;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+        .blob1, .blob2 { position: fixed; width: 500px; height: 500px; border-radius: 50%; pointer-events: none; z-index: 1; opacity: 0.15; }
+        .blob1 { top: 10%; right: 10%; background: radial-gradient(circle, var(--accent-glow-1) 0%, transparent 70%); }
+        .blob2 { bottom: 10%; left: 5%; background: radial-gradient(circle, var(--accent-glow-2) 0%, transparent 70%); }
+        header { max-width: 1200px; margin: 0 auto; padding: 30px 24px; display: flex; justify-content: space-between; position: relative; z-index: 10; }
+        .logo { font-weight: 600; font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase; }
+        .theme-toggle { background: none; border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 16px; font-size: 11px; cursor: pointer; border-radius: 20px; }
+        main { max-width: 900px; margin: 0 auto; padding: 20px 24px 60px; position: relative; z-index: 5; text-align: center; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 52px; margin-bottom: 16px; }
+        .subtitle { font-size: 17px; color: var(--text-muted); margin-bottom: 48px; }
+        .glass-card { background: var(--surface-color); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 32px; padding: 32px; margin-bottom: 32px; text-align: left; }
+        textarea { width: 100%; background: var(--code-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; color: var(--text-main); font-family: monospace; font-size: 14px; resize: vertical; min-height: 200px; }
+        .result-box { margin-top: 24px; padding: 20px; border-radius: 16px; transition: 0.3s; }
+        .result-safe { background: var(--safe-bg); border: 1px solid var(--safe-border); }
+        .result-danger { background: var(--danger-bg); border: 1px solid var(--danger-border); }
+        .result-warning { background: var(--warning-bg); border: 1px solid var(--warning-border); }
+        .result-title { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+        .result-detail { font-size: 14px; line-height: 1.6; }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-right: 8px; }
+        .btn { background: linear-gradient(135deg, var(--accent-glow-1), var(--accent-glow-2)); color: #000; border: none; padding: 14px 28px; border-radius: 40px; font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 16px; }
+        .enterprise-card { background: var(--code-bg); border: 1px solid var(--accent-glow-2); border-radius: 24px; padding: 32px; text-align: center; margin-top: 48px; }
+        footer { text-align: center; padding: 40px 24px; font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--border-color); }
+    </style>
 </head>
 <body>
-<div class="blob1"></div>
-<div class="blob2"></div>
-
-<header>
-    <div class="logo">AXIOM SYSTEMS</div>
-    <button class="theme-toggle" id="themeToggle">🌙</button>
-</header>
-
+<div class="blob1"></div><div class="blob2"></div>
+<header><div class="logo">AXIOM SYSTEMS</div><button class="theme-toggle" id="themeToggle">🌙</button></header>
 <main>
     <h1>🛡️ AXIOM AGENT-VOID</h1>
     <div class="subtitle">El Escudo de Veracidad para tus prompts. Detecta jailbreaks, inyecciones y ruido antes de que lleguen a tu IA.</div>
@@ -33,13 +88,95 @@
     <div class="enterprise-card">
         <h3 style="margin-bottom: 16px;">🏢 ¿Necesitas proteger tus agentes de IA a nivel empresarial?</h3>
         <p style="color: var(--text-muted); margin-bottom: 24px;">El mismo motor, pero instalable en tus servidores. Binario en Rust, ultra-rápido, sin dependencias externas.</p>
-        <a href="https://axiom-systemstech.github.io/axiom-systems/" target="_blank" class="btn-enterprise">💼 Solicitar licencia del motor →</a>
+        <a href="https://axiom-systemstech.github.io/axiom-systems/" target="_blank" style="background: var(--accent-glow-2); color: #fff; padding: 12px 28px; border-radius: 40px; text-decoration: none; font-weight: 600;">💼 Solicitar licencia del motor →</a>
     </div>
 </main>
-
 <footer>© 2026 AXIOM SYSTEMS · Análisis 100% local · Tus datos no salen de tu navegador</footer>
 
-<script src="js/detection-engine.js"></script>
-<script src="js/main.js"></script>
+<script>
+    // Patrones de detección (simulación local - el motor real está en Rust)
+    const patterns = {
+        jailbreak: [
+            /ignore previous instructions/i, /forget your rules/i, /you are now DAN/i, 
+            /act as if/i, /pretend you have no restrictions/i, /developer mode/i,
+            /break character/i, /no longer bound by/i, /override your guidelines/i
+        ],
+        injection: [
+            /\\n\\nUser:\\s*.*\\nAssistant:/i, /---BEGIN/i, /---END/i,
+            /system:\\s*.*\\nuser:/i, /role:\\s*system/i, /new instruction:/i
+        ],
+        noise: [
+            /\\w{30,}/, /(.)\\1{10,}/, /[^\\w\\s]{15,}/, /\\s{20,}/
+        ]
+    };
+    
+    function analyzePrompt(text) {
+        if (!text.trim()) return { level: "none", score: 0, details: "Esperando texto para analizar..." };
+        
+        let jailbreakScore = 0;
+        let injectionScore = 0;
+        let noiseScore = 0;
+        let detections = [];
+        
+        // Jailbreak
+        for (let p of patterns.jailbreak) {
+            if (p.test(text)) { jailbreakScore += 25; detections.push(`Jailbreak: ${p.source}`); }
+        }
+        
+        // Inyección
+        for (let p of patterns.injection) {
+            if (p.test(text)) { injectionScore += 30; detections.push(`Inyección: ${p.source}`); }
+        }
+        
+        // Ruido
+        for (let p of patterns.noise) {
+            if (p.test(text)) { noiseScore += 15; detections.push(`Ruido excesivo detectado`); break; }
+        }
+        
+        // Longitud extrema
+        if (text.length > 3000) noiseScore += 20;
+        if (text.split(/\s+/).length > 500) noiseScore += 15;
+        
+        const totalScore = Math.min(jailbreakScore + injectionScore + noiseScore, 100);
+        
+        let level = "safe";
+        let title = "✅ PROMPT SEGURO";
+        let color = "safe";
+        if (totalScore >= 60) { level = "danger"; title = "⚠️ ALTO RIESGO"; color = "danger"; }
+        else if (totalScore >= 30) { level = "warning"; title = "⚠️ RIESGO MODERADO"; color = "warning"; }
+        
+        let detailText = `Puntuación de riesgo: ${totalScore}%\n\n`;
+        if (detections.length > 0) detailText += `🔍 Detecciones:\n- ${detections.join('\n- ')}\n\n`;
+        detailText += "💡 Recomendación: " + (level === "safe" ? "El prompt parece seguro para enviar." : 
+                   (level === "warning" ? "Revisa el prompt. Podría contener intentos de manipulación." : 
+                   "NO ENVÍES ESTE PROMPT. Contiene patrones peligrosos."));
+        
+        return { level, title, detail: detailText, score: totalScore };
+    }
+    
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const promptInput = document.getElementById('promptInput');
+    const resultArea = document.getElementById('resultArea');
+    
+    analyzeBtn.addEventListener('click', () => {
+        const text = promptInput.value;
+        const result = analyzePrompt(text);
+        
+        resultArea.style.display = 'block';
+        resultArea.className = `result-box result-${result.level}`;
+        resultArea.innerHTML = `
+            <div class="result-title">${result.title}</div>
+            <div class="result-detail"><pre style="white-space: pre-wrap; font-family: inherit;">${result.detail}</pre></div>
+        `;
+    });
+    
+    const toggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    toggle.addEventListener('click', () => {
+        const isDark = html.getAttribute('data-theme') === 'dark';
+        html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        toggle.innerText = isDark ? '☀️' : '🌙';
+    });
+</script>
 </body>
 </html>
