@@ -3,9 +3,8 @@ const urlsToCache = [
   "./",
   "./index.html",
   "./manifest.json",
-  "./css/styles.css",
-  "./js/detection-engine.js",
-  "./js/main.js",
+  "./agent-void-core.js",
+  "./agent-void-ui.js",
   "./assets/favicon.png"
 ];
 
